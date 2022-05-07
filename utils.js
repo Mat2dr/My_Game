@@ -1,14 +1,14 @@
 const utils = {
     withGrid(n) {
-        return n * 16;
+        return n * 32;
     },
     asGridCoords(x,y) {
-        return `${x*16},${y*16}`
+        return `${x*32},${y*32}`
     },
     nextPosition(initialX, initialY, direction) {
         let x = initialX;
         let y = initialY;
-        const size = 16;
+        const size = 32;
 
         if (direction === 'left') {
             x -= size;
@@ -20,5 +20,11 @@ const utils = {
             y += size;
         }
         return {x,y};
+    },
+    emitEvent(name, detail) {
+        const event = new CustomEvent(name, {
+            detail
+        });
+        document.dispatchEvent(event);
     }
 }

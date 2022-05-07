@@ -8,21 +8,23 @@ class OverworldMap {
 
         this.upperImage = new Image();
         this.upperImage.src = config.upperSrc;
+
+        this.isCutscenePlaying = false;
     }
 
     drawLowerImage(ctx, cameraPerson) {
         ctx.drawImage(
             this.lowerImage,
-             utils.withGrid(10.5) - cameraPerson.x,
-             utils.withGrid(6) - cameraPerson.y,
+             utils.withGrid(5.5) - cameraPerson.x,
+             utils.withGrid(3.1) - cameraPerson.y,
             )
     }
 
     drawUpperImage(ctx, cameraPerson) {
         ctx.drawImage(
             this.upperImage,
-             utils.withGrid(10.5) - cameraPerson.x,
-             utils.withGrid(6) - cameraPerson.y,
+             utils.withGrid(5.5) - cameraPerson.x,
+             utils.withGrid(3.1) - cameraPerson.y,
             )
     }
 
@@ -32,11 +34,28 @@ class OverworldMap {
     }
 
     mountObjects() {
-        Object.values(this.gameObjects).forEach(o => {
+        Object.keys(this.gameObjects).forEach(key => {
+
+            let object = this.gameObjects[key];
+            object.id = key;
 
             //TODO: Determine if the object should actually mount
-            o.mount(this);
+            object.mount(this);
         })
+    }
+
+    async startCutscene(events) {
+        this.isCutscenePlaying = true;
+
+        for (let i=0; i<events.length; i++) {
+            const eventHandler = new OverworldEvent({
+                event: events[i],
+                map: this,
+            })
+            await eventHandler.init();
+        }
+
+        this.isCutscenePlaying = false;
     }
 
     addWall(x,y) {
@@ -53,6 +72,66 @@ class OverworldMap {
 }
 
 window.OverworldMaps = {
+    Chambre: {
+        lowerSrc: '/images/maps/chambre.png',
+        upperSrc: '',
+        gameObjects: {
+            hero: new Person({
+                isPlayerControlled: true,
+                x: utils.withGrid(2),
+                y: utils.withGrid(3),
+            }),
+            npcA: new Person({
+                x: utils.withGrid(4),
+                y: utils.withGrid(3),
+                src: '/images/characters/people/npc1.png',
+                behaviorLoop: [
+                    { type: 'walk', direction: 'left' },
+                    { type: 'stand', direction: 'up', time: 800 },
+                    { type: 'walk', direction: 'down' },
+                    { type: 'stand', direction: 'down', time: 300 },
+                    { type: 'walk', direction: 'up' },
+                    { type: 'walk', direction: 'right' },
+                ]
+            }),
+            npcB: new Person({
+                x: utils.withGrid(0),
+                y: utils.withGrid(4),
+                src: '/images/characters/people/npc2.png',
+                behaviorLoop: [
+                    { type: 'stand', direction: 'left', time: 800 },
+                    { type: 'stand', direction: 'up', time: 800 },
+                    { type: 'stand', direction: 'right', time: 1200 },
+                    { type: 'stand', direction: 'down', time: 300 },
+                ]
+            })
+        },
+         walls: {
+            //lit
+            [utils.asGridCoords(0,2)]: true,
+            [utils.asGridCoords(0,3)]: true,
+            //wall left
+            [utils.asGridCoords(-1,4)]: true,
+            //wall bottom
+            [utils.asGridCoords(0,5)]: true,
+            [utils.asGridCoords(1,5)]: true,
+            [utils.asGridCoords(2,6)]: true,
+            [utils.asGridCoords(3,5)]: true,
+            [utils.asGridCoords(4,5)]: true,
+            //wall right
+            [utils.asGridCoords(5,4)]: true,
+            [utils.asGridCoords(5,3)]: true,
+            [utils.asGridCoords(5,2)]: true,
+            //chair
+            [utils.asGridCoords(4,4)]: true,
+            //wall top
+            [utils.asGridCoords(4,2)]: true,
+            [utils.asGridCoords(3,2)]: true,
+            [utils.asGridCoords(2,2)]: true,
+            [utils.asGridCoords(1,1)]: true,
+            [utils.asGridCoords(0,1)]: true,
+        } 
+    },
     DemoRoom: {
         lowerSrc: '/images/maps/DemoLower.png',
         upperSrc: '/images/maps/DemoUpper.png',
@@ -69,13 +148,54 @@ window.OverworldMaps = {
             }),
         },
         walls: {
+            //Walls left
+            [utils.asGridCoords(0,0)]: true,
+            [utils.asGridCoords(0,1)]: true,
+            [utils.asGridCoords(0,2)]: true,
+            [utils.asGridCoords(0,3)]: true,
+            [utils.asGridCoords(0,4)]: true,
+            [utils.asGridCoords(0,5)]: true,
+            [utils.asGridCoords(0,6)]: true,
+            [utils.asGridCoords(0,7)]: true,
+            [utils.asGridCoords(0,8)]: true,
+            [utils.asGridCoords(0,9)]: true,
+            //Walls top
+            [utils.asGridCoords(0,0)]: true,
+            [utils.asGridCoords(1,3)]: true,
+            [utils.asGridCoords(2,3)]: true,
+            [utils.asGridCoords(3,3)]: true,
+            [utils.asGridCoords(4,3)]: true,
+            [utils.asGridCoords(5,3)]: true,
+            [utils.asGridCoords(6,4)]: true,
+            [utils.asGridCoords(7,3)]: true,
+            [utils.asGridCoords(8,4)]: true,
+            [utils.asGridCoords(9,3)]: true,
+            [utils.asGridCoords(10,3)]: true,
+            //walls left
+            [utils.asGridCoords(11,4)]: true,
+            [utils.asGridCoords(11,5)]: true,
+            [utils.asGridCoords(11,6)]: true,
+            [utils.asGridCoords(11,7)]: true,
+            [utils.asGridCoords(11,8)]: true,
+            [utils.asGridCoords(11,9)]: true,
+            //walls bottom
+            [utils.asGridCoords(10,10)]: true,
+            [utils.asGridCoords(9,10)]: true,
+            [utils.asGridCoords(8,10)]: true,
+            [utils.asGridCoords(7,10)]: true,
+            [utils.asGridCoords(6,10)]: true,
+            [utils.asGridCoords(5,11)]: true,
+            [utils.asGridCoords(4,10)]: true,
+            [utils.asGridCoords(3,10)]: true,
+            [utils.asGridCoords(2,10)]: true,
+            [utils.asGridCoords(1,10)]: true,
+            //Table
             [utils.asGridCoords(7,6)]: true,
             [utils.asGridCoords(8,6)]: true,
             [utils.asGridCoords(7,7)]: true,
             [utils.asGridCoords(8,7)]: true,
         }
     },
-
     Kitchen: {
         lowerSrc: '/images/maps/KitchenLower.png',
         upperSrc: '/images/maps/KitchenUpper.png',
@@ -94,7 +214,9 @@ window.OverworldMaps = {
                 y: 8,
                 src: '/images/characters/people/npc3.png'
             }),
+        },
+        walls: {
+            [utils.asGridCoords(0,0)]: true,
         }
-    }
-
+    },
 }
