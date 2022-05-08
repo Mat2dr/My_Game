@@ -17,16 +17,16 @@ class OverworldMap {
     drawLowerImage(ctx, cameraPerson) {
         ctx.drawImage(
             this.lowerImage,
-             utils.withGrid(5.5) - cameraPerson.x,
-             utils.withGrid(3.1) - cameraPerson.y,
+             utils.withGrid(5) - cameraPerson.x,
+             utils.withGrid(2.1) - cameraPerson.y,
             )
     }
 
     drawUpperImage(ctx, cameraPerson) {
         ctx.drawImage(
             this.upperImage,
-             utils.withGrid(5.5) - cameraPerson.x,
-             utils.withGrid(3.1) - cameraPerson.y,
+             utils.withGrid(5) - cameraPerson.x,
+             utils.withGrid(2.1) - cameraPerson.y,
             )
     }
 
@@ -123,25 +123,6 @@ window.OverworldMaps = {
                     }
                 ]
             }),
-            npcA: new Person({
-                x: utils.withGrid(2),
-                y: utils.withGrid(10),
-                src: '/images/characters/people/npc2.png',
-                behaviorLoop: [
-                    { type: 'stand', direction: 'left', time: 800 },
-                    { type: 'stand', direction: 'up', time: 800 },
-                    { type: 'stand', direction: 'right', time: 1200 },
-                    { type: 'stand', direction: 'down', time: 300 },
-                ],
-                talking: [
-                    {
-                        events: [
-                            {type: 'textMessage', text: "oh oh ohhh", faceHero: "npcB" },
-                            {type: 'textMessage', text: "i'm busy" }
-                        ]
-                    }
-                ]
-            })
         },
          walls: {
             //lit
@@ -189,12 +170,20 @@ window.OverworldMaps = {
             }),
             npcB: new Person({
                 x: utils.withGrid(16),
-                y: utils.withGrid(15),
+                y: utils.withGrid(18),
                 src: '/images/characters/people/npc2.png',
+                behaviorLoop: [
+                    { type: 'stand', direction: 'left', time: 400 },
+                    { type: 'stand', direction: 'up', time: 500 },
+                    { type: 'stand', direction: 'right', time: 200 },
+                    { type: 'stand', direction: 'down', time: 300 },
+                ],
                 talking: [
                     {
                         events: [
                             {type: 'textMessage', text: "Enfin te voilà !", faceHero: "npcB" },
+                            {type: 'textMessage', text: "Je voulais te dire...", faceHero: "npcB" },
+                            {type: 'textMessage', text: "J'ai perdu mes clés !", faceHero: "npcB" },
                         ]
                     }
                 ]

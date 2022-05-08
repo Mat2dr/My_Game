@@ -76,7 +76,7 @@ class Overworld {
         this.startGameLoop();
 
         this.map.startCutscene([
-             {type: 'textMessage', text: 'toc toc toc' },
+            {type: 'textMessage', text: 'toc toc toc' },
             {type: 'textMessage', text: 'TOC TOC TOC' },
             {type: 'textMessage', text: 'On a besoin de toi vite !' },
         ]);
