@@ -65,7 +65,7 @@ class Overworld {
     }
 
     init() {
-        this.startMap(window.OverworldMaps.Chambre);
+        this.startMap(window.OverworldMaps.House);
 
         this.bindActionInput();
         this.bindHeroPositionCheck();
@@ -76,7 +76,9 @@ class Overworld {
         this.startGameLoop();
 
         this.map.startCutscene([
-            {type: 'textMessage', text: 'Hello there !' },
+             {type: 'textMessage', text: 'toc toc toc' },
+            {type: 'textMessage', text: 'TOC TOC TOC' },
+            {type: 'textMessage', text: 'On a besoin de toi vite !' },
         ]);
     }
 }
