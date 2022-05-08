@@ -97,7 +97,7 @@ class OverworldMap {
 
 window.OverworldMaps = {
     House: {
-        lowerSrc: '/images/maps/chambre.png',
+        lowerSrc: 'images/maps/chambre.png',
         upperSrc: '',
         gameObjects: {
             hero: new Person({
@@ -108,7 +108,7 @@ window.OverworldMaps = {
             cat: new Person({
                 x: utils.withGrid(4),
                 y: utils.withGrid(3),
-                src: '/images/characters/animals/cat.png',
+                src: 'images/characters/animals/cat.png',
                  behaviorLoop: [
                     { type: 'stand', direction: 'left', time: 800 },
                     { type: 'stand', direction: 'up', time: 800 },
@@ -160,7 +160,7 @@ window.OverworldMaps = {
         }
     },
     HouseGarden: {
-        lowerSrc: '/images/maps/samplemap.png',
+        lowerSrc: 'images/maps/samplemap.png',
         upperSrc: '',
         gameObjects: {
             hero: new Person({
@@ -171,7 +171,7 @@ window.OverworldMaps = {
             npcB: new Person({
                 x: utils.withGrid(16),
                 y: utils.withGrid(18),
-                src: '/images/characters/people/npc2.png',
+                src: 'images/characters/people/npc2.png',
                 behaviorLoop: [
                     { type: 'stand', direction: 'left', time: 400 },
                     { type: 'stand', direction: 'up', time: 500 },
