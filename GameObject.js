@@ -12,10 +12,11 @@ class GameObject {
 
         this.behaviorLoop = config.behaviorLoop || [];
         this.behaviorLoopIndex = 0;
+
+        this.talking = config.talking || [];
     }
 
     mount(map) {
-        console.log('mountedd')
         this.isMounted = true;
         map.addWall(this.x, this.y);
 
@@ -30,7 +31,7 @@ class GameObject {
 
     async doBehaviorEvent(map) {
         //don't do anything if there is a cutscene or don't have anything config
-        if (map.isCutscenePlaying || this.behaviorLoop.length === 0) {
+        if (map.isCutscenePlaying || this.behaviorLoop.length === 0 || this.isStanding) {
             return;
         }
 
